@@ -9,4 +9,8 @@ public class Log {
         System.out.println("[OK]: " + msg);
     }
 
+    public void info(String msg){
+        System.out.println(msg);
+    }
+
 }

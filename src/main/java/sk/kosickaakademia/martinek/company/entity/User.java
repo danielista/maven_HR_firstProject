@@ -12,6 +12,11 @@ public class User {
     private String fname;
     private String lname;
     private int age;
+
+    public Gender getGender() {
+        return gender;
+    }
+
     private Gender gender;
 
     public User(String fname, String lname, int age, int gender) {
@@ -39,5 +44,17 @@ public class User {
 
     public Gender isGender() {
         return gender;
+    }
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", fname='" + fname + '\'' +
+                ", lname='" + lname + '\'' +
+                ", age=" + age +
+                ", gender=" + gender +
+                '}';
     }
 }
