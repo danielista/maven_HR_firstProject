@@ -124,6 +124,19 @@ public class Databaza {
         return list;
     }
 
+    public List<User> getAllUsers(){
+
+        String sql = "SELECT * FROM user";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            return executeSelect(ps);
+        }catch(Exception ex){
+            log.error(ex.toString());
+        }
+
+        return null;
+
+    }
 
 
 }

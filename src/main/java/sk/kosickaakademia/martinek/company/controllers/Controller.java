@@ -5,6 +5,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +13,9 @@ import sk.kosickaakademia.martinek.company.database.Databaza;
 import sk.kosickaakademia.martinek.company.entity.User;
 import sk.kosickaakademia.martinek.company.enumartoris.Gender;
 import sk.kosickaakademia.martinek.company.log.Log;
+import sk.kosickaakademia.martinek.company.util.Util;
+
+import java.util.List;
 
 
 @RestController
@@ -60,12 +64,20 @@ public class Controller {
             return ResponseEntity.status(400).contentType(MediaType.APPLICATION_JSON).body(obj.toJSONString());
 
         }
-
-
 return null;
-
-
-
         }
+
+
+    @GetMapping("/users")
+    public ResponseEntity<String> insertNewUser(@RequestBody String data){
+
+        List<User> list = new Databaza().getAllUsers();
+        String json = new Util().getJson(list);
+        return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON).body(json);
+
+        return null;
+        }
+
+
 
 }
