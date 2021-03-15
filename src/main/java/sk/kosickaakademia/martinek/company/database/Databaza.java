@@ -138,5 +138,20 @@ public class Databaza {
 
     }
 
+    public boolean changeAge(int id, int newAge){
+        // TO DO
+        /*
+           vek: <1 ; 99>
+         */
+        return false;
+    }
+
+    public List<User> getUser(String pattern){
+       /* "mi" -> Miro, Mila, Jarmila, Kominar
+                // select    ....where fname like '%?%' OR lname like '%?%'*/
+        return null;
+    }
+
+
 
 }

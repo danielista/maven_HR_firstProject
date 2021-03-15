@@ -5,10 +5,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import sk.kosickaakademia.martinek.company.database.Databaza;
 import sk.kosickaakademia.martinek.company.entity.User;
 import sk.kosickaakademia.martinek.company.enumartoris.Gender;
@@ -78,6 +75,29 @@ return null;
         //return null;
         }
 
+    // /users/age?from=A&to=B
+    @GetMapping("users/age")
+    public ResponseEntity<String> getUserByAge(@RequestParam(value="from") int from,@RequestParam(value = "to") int to){
+
+        if (from>to || from<1 ) {
+            JSONObject obj = new JSONObject();
+            log.error("years are not correct");
+            obj.put("Error:", "INCORRECT year...");
+            return ResponseEntity.status(400).contentType(MediaType.APPLICATION_JSON).body(obj.toJSONString());
+        }
+            Databaza db = new Databaza();
+            List<User> list = db.getUsersByAge(from,to);
+            String json = new Util().getJson(list);
+        return ResponseEntity.status(400).contentType(MediaType.APPLICATION_JSON).body(json);
+    }
+
+
+    @PutMapping("/user/{id}")
+    public  ResponseEntity<String> changeAge(@PathVariable Integer id, @RequestBody String body){
+
+
+        return null;
+    }
 
 
 }

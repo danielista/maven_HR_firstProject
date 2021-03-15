@@ -10,9 +10,8 @@ import java.util.List;
 public class Util {
 
     public String getJson(List<User> list){
-            /* ak user==null   { }
-        { "datetime":"1254-12-25..." , "size":5 , "users":[ {...},{},{},{},{} ] }
-         */
+
+
         if(list.isEmpty()) return "{}";
 
         JSONObject object = new JSONObject();
@@ -33,9 +32,8 @@ public class Util {
         return object.toJSONString();
     }
     public String getJson(User user){
-        /* ak user==null   { }
-        { "datetime":"1254-12-25..." , "size":1 , "users":[ {"id",    } ] }
-         */
+
+
         if(user==null) return "{}";
         JSONObject object = new JSONObject();
         object.put("datetime",getCurrentDateTime());
