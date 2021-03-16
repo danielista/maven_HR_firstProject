@@ -93,10 +93,33 @@ return null;
 
 
     @PutMapping("/user/{id}")
-    public  ResponseEntity<String> changeAge(@PathVariable Integer id, @RequestBody String body){
+    public  ResponseEntity<String> changeAge(@PathVariable Integer id, @RequestBody String body) throws ParseException {
+        JSONObject object = (JSONObject) new JSONParser().parse(body);
+
+        String data = String.valueOf(object.get("newage"));
+        int newage = Integer.parseInt(data);
+
+        if(newage < 1) return ResponseEntity.status(400).contentType(MediaType.APPLICATION_JSON).body("{}");
+
+        boolean result = new Databaza().changeAge(id,newage);
+
+        int status;
+        if(result) status = 200;
+        else status = 404;
+        return ResponseEntity.status(status).contentType(MediaType.APPLICATION_JSON).body("{}");
+
+    }
 
 
-        return null;
+
+
+    @GetMapping("/")
+    public ResponseEntity<String> overview(){
+        //tu si vytiahnem z db všetkych userov v LISTE
+        List<User> list = new Databaza().getAllUsers();
+        String jsonOvervieew = new Util().getOverview(list);
+
+        return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON).body(jsonOvervieew.toString());
     }
 
 

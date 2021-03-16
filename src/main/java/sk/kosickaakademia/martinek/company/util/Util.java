@@ -2,6 +2,7 @@ package sk.kosickaakademia.martinek.company.util;
 
 import org.json.simple.*;
 import sk.kosickaakademia.martinek.company.entity.User;
+import sk.kosickaakademia.martinek.company.enumartoris.Gender;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -66,5 +67,34 @@ public class Util {
         name=name.trim();
         // MILAN -> Milan       jOzEf -> Jozef
         return Character.toUpperCase(name.charAt(0))+name.substring(1).toLowerCase();
+    }
+
+    public String getOverview(List<User> list) {
+        int count = list.size();
+        int male = 0;
+        int female = 0;
+        int minAge = count > 0 ? list.get(0).getAge() : 0;
+        int maxAge = count > 0 ? list.get(0).getAge() : 0;
+        int sumAge = 0;
+        for(User user : list){
+            if(user.getGender() == Gender.MALE) male++;
+            if(user.getGender() == Gender.FEMALE) female++;
+            sumAge = sumAge + user.getAge();
+            if(minAge > user.getAge()) minAge = user.getAge();
+            if(maxAge < user.getAge()) maxAge = user.getAge();
+        }
+        double avgAge = (double) sumAge/count;
+
+
+        JSONObject object = new JSONObject();
+        object.put("totalNumber",count);
+        object.put("min",minAge);
+        object.put("max",maxAge);
+        object.put("countMale",male);
+        object.put("countFemale",female);
+        object.put("average",avgAge);
+
+
+        return object.toJSONString();
     }
 }

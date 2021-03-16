@@ -139,10 +139,8 @@ public class Databaza {
     }
 
     public boolean changeAge(int id, int newAge){
-        // TO DO
-        /*
-           vek: <1 ; 99>
-         */
+
+        // TO - DO
         return false;
     }
 
