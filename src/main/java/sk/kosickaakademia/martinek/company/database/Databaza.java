@@ -1,6 +1,5 @@
 package sk.kosickaakademia.martinek.company.database;
 
-
 import sk.kosickaakademia.martinek.company.entity.User;
 import sk.kosickaakademia.martinek.company.log.Log;
 
@@ -39,12 +38,9 @@ public class Databaza {
     }
 
     public boolean insertNewUser(User user) {
-
-
         try( Connection con = getConnection()){
 
         if(con!= null){
-
                 PreparedStatement ps = con.prepareStatement(INSERTQUERY);
                 ps.setString(1,user.getFname());
                 ps.setString(2,user.getLname());
@@ -87,6 +83,7 @@ public class Databaza {
         }
         return null;
     }
+
     public List<User> getUsersByAge(int from, int to){
         if (from>to){
             return null;
@@ -104,7 +101,6 @@ public class Databaza {
 
         return null;
     }
-
 
     private List<User> executeSelect(PreparedStatement ps) throws SQLException{
         ResultSet rs = ps.executeQuery();
@@ -139,14 +135,37 @@ public class Databaza {
     }
 
     public boolean changeAge(int id, int newAge){
+        String CHANGEAGE = "UPDATE user SET age = ? WHERE id = ?";
 
-        // TO - DO
+        if (id < 0 || newAge < 1 || newAge >= 100)
+            return false;
+        try (Connection connection = getConnection()){
+            if (connection != null) {
+                PreparedStatement ps = connection.prepareStatement(CHANGEAGE);
+                ps.setInt(1, newAge);
+                ps.setInt(2, id);
+                int update = ps.executeUpdate();
+                log.print("Updated age for id: " + id);
+                return update == 1;
+            }
+        } catch (Exception e) { log.error(e.toString()); }
         return false;
     }
 
     public List<User> getUser(String pattern){
-       /* "mi" -> Miro, Mila, Jarmila, Kominar
-                // select    ....where fname like '%?%' OR lname like '%?%'*/
+
+        String GETUSERBYPATTERN = "SELECT * FROM user WHERE lname LIKE ? OR fname LIKE ?";
+        if (pattern == null || pattern.equals(""))
+            return null;
+        try (Connection connection = getConnection()){
+            if (connection != null){
+                PreparedStatement ps = connection.prepareStatement(GETUSERBYPATTERN);
+                String newPattern = "%" + pattern + "%";
+                ps.setString(1, newPattern);
+                ps.setString(2, newPattern);
+                return executeSelect(ps);
+            }
+        } catch (Exception e) { log.error(e.toString()); }
         return null;
     }
 
