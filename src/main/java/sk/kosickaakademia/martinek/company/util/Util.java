@@ -7,6 +7,7 @@ import sk.kosickaakademia.martinek.company.enumartoris.Gender;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 public class Util {
 
@@ -96,4 +97,21 @@ public class Util {
 
         return object.toJSONString();
     }
+
+    // generovanie TOKENU .. nahodný string ;) :D
+    // 4O znakovy token pismena  a cislice
+    public String generateToken(){
+        String token = "";
+        Random rnd = new Random();
+        for(int i=0; i<40; i++){
+            int help = rnd.nextInt(3); // ak bude 0  chcem capital letter.., 1 lowercase, 2-number
+            switch(help){
+                case 0: token = token + (char)(rnd.nextInt(26) + 65) ;break;
+                case 1: token = token + (char)(  rnd.nextInt(26) + 97); break;
+                case 2: token = token + (char)(rnd.nextInt(10) + 48); break;
+            }
+        }
+        return token;
+    }
+
 }
