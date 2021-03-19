@@ -32,6 +32,7 @@ public class Util {
 
         return object.toJSONString();
     }
+
     public String getJson(User user){
 
 
@@ -65,7 +66,7 @@ public class Util {
             return "";
 
         name=name.trim();
-        // MILAN -> Milan       jOzEf -> Jozef
+
         return Character.toUpperCase(name.charAt(0))+name.substring(1).toLowerCase();
     }
 
@@ -85,7 +86,6 @@ public class Util {
         }
         double avgAge = (double) sumAge/count;
 
-
         JSONObject object = new JSONObject();
         object.put("totalNumber",count);
         object.put("min",minAge);
@@ -93,7 +93,6 @@ public class Util {
         object.put("countMale",male);
         object.put("countFemale",female);
         object.put("average",avgAge);
-
 
         return object.toJSONString();
     }

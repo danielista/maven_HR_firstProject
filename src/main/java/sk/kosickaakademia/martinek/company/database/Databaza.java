@@ -11,8 +11,6 @@ public class Databaza {
     Tajnosti tj = new Tajnosti();
     Log log = new Log();
 
-    private final String INSERTQUERY = "INSERT INTO user (fname, lname, age, gender) VALUES ( ?,?,?,?)";
-
     public Connection getConnection() {
         try {
             Connection con = DriverManager.getConnection(tj.getUrl(), tj.getUsername(), tj.getPassword());
@@ -38,6 +36,8 @@ public class Databaza {
     }
 
     public boolean insertNewUser(User user) {
+        String INSERTQUERY = "INSERT INTO user (fname, lname, age, gender) VALUES ( ?,?,?,?)";
+
         try( Connection con = getConnection()){
 
         if(con!= null){
@@ -60,7 +60,6 @@ public class Databaza {
 
         return false;
     }
-
 
     public List<User> getFemales(){
         String sqlQuerySelectFemales = "SELECT * FROM user WHERE gender = 1";
