@@ -2,6 +2,7 @@ package sk.kosickaakademia.martinek.company.util;
 
 import org.json.simple.*;
 import sk.kosickaakademia.martinek.company.entity.User;
+import sk.kosickaakademia.martinek.company.entity.ockovanie.Persons;
 import sk.kosickaakademia.martinek.company.enumartoris.Gender;
 
 import java.text.SimpleDateFormat;
@@ -26,10 +27,32 @@ public class Util {
             userJson.put("fname", u.getFname());
             userJson.put("lname", u.getLname());
             userJson.put("age", u.getAge());
-            userJson.put("gender", u.getGender().toString());   // ? overit ?
+            userJson.put("gender", u.getGender().toString());
             jsonArray.add(userJson);
         }
         object.put("users",jsonArray);
+
+        return object.toJSONString();
+    }
+
+    public String getJsonForPersons(List<Persons> list){
+
+
+        if(list.isEmpty()) return "{}";
+
+        JSONObject object = new JSONObject();
+        object.put("datetime",getCurrentDateTime());
+        object.put("size",list.size());
+        JSONArray jsonArray=new JSONArray();
+        for(Persons persons : list ) {
+            JSONObject personsJson = new JSONObject();
+            personsJson.put("meno", persons.getFirstname());
+            personsJson.put("priezvisko", persons.getLastname());
+            personsJson.put("stav", persons.getState());
+            personsJson.put("vek", persons.getAge());
+            jsonArray.add(personsJson);
+        }
+        object.put("persons",jsonArray);
 
         return object.toJSONString();
     }
