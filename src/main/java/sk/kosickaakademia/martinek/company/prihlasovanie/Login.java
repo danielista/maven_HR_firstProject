@@ -11,8 +11,8 @@ public class Login {
     }
 
     // hashmapa do ktorej davame userovlogin a jeho cas prihlasovania
-    private Map<String, Date> blocked;
-    private Map<String, Integer> attempt;
+    private static Map<String, Date> blocked;
+    private static Map<String, Integer> attempt;
 
     public String loginUser(String username){
         // zadanie:

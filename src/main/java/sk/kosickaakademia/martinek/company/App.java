@@ -5,7 +5,9 @@ import org.json.simple.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import sk.kosickaakademia.martinek.company.database.Databaza;
+import sk.kosickaakademia.martinek.company.database.OckovaciaBaza;
 import sk.kosickaakademia.martinek.company.entity.User;
+import sk.kosickaakademia.martinek.company.entity.ockovanie.Persons;
 import sk.kosickaakademia.martinek.company.enumartoris.Gender;
 
 import javax.swing.*;
@@ -19,7 +21,11 @@ public class App
     public static void main( String[] args ) throws SQLException, ClassNotFoundException {
 
 
-        SpringApplication.run(App.class,args);
+      //  SpringApplication.run(App.class,args);
+        OckovaciaBaza db = new OckovaciaBaza();
+        List<Persons> zoznam = db.getAllPersons();
+        for(Persons p:zoznam) System.out.println(p.toString());
+
 
         /*    System.out.println( "Hello World!" );
         Databaza db = new Databaza();
