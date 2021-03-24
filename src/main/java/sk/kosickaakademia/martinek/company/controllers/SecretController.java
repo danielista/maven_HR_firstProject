@@ -76,4 +76,27 @@ public class SecretController {
         return null;
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(@RequestHeader("token") String header){
+        String token = header.substring(7);
+        String login = null;
+        for (Map.Entry<String, String> entry : map.entrySet()){
+            if(entry.getValue().equalsIgnoreCase(token)){
+                login = entry.getKey();
+                break;
+            }
+        }
+
+        if(login != null){
+            map.remove(login);
+            log.info("Logout user: " + login);
+        }else{
+            log.error("logout FAILED. User " + login + " neexistuje... ;)");
+        }
+        return  ResponseEntity.status(201).contentType(MediaType.APPLICATION_JSON).body("");
+
+    }
+
+
+
 }
