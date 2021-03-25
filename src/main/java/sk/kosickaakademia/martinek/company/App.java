@@ -23,6 +23,10 @@ public class App
 
        SpringApplication.run(App.class,args);
 
+
+       // OckovaciaBaza db = new OckovaciaBaza();
+       // db.insertNewPerson(new Persons("Bohdan","Neviemaky",false,30));
+
        /* OckovaciaBaza db = new OckovaciaBaza();
         List<Persons> zoznam = db.getAllPersons();
         for(Persons p:zoznam) System.out.println(p.toString());

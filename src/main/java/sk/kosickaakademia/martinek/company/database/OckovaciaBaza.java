@@ -1,5 +1,6 @@
 package sk.kosickaakademia.martinek.company.database;
 
+import sk.kosickaakademia.martinek.company.entity.User;
 import sk.kosickaakademia.martinek.company.entity.ockovanie.Persons;
 import sk.kosickaakademia.martinek.company.log.Log;
 
@@ -58,24 +59,33 @@ public class OckovaciaBaza {
 
 
 
-    public void insertRecord(String firstname, String lastname, String stav, Date datum){
-/*try {
-            Connection connection = getConnection();
+    //public void insertRecord(String firstname, String lastname, String stav, Date datum){
+        public boolean insertNewPerson(Persons person) {
+            String INSERTQUERY = "INSERT INTO osoby (meno, priezvisko, stav, vek) VALUES ( ?,?,?,?)";
 
-            String query = "insert into "+table+"(name,time) " + "values(?,?)";
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setNString(1,firstname);
-            ps.setDate(2,datum);
+            try( Connection con = getConnection()){
 
-            ps.executeUpdate();
+                if(con!= null){
+                    PreparedStatement ps = con.prepareStatement(INSERTQUERY);
+                    ps.setString(1,person.getFirstname());
+                    ps.setString(2,person.getLastname());
+                    ps.setBoolean(3,person.getState());
+                    ps.setInt(4,person.getAge());
 
-            connection.close();
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+                    int result = ps.executeUpdate();
+
+
+                    log.print("New person has been added to the DB");
+                    return result == 1;
+                }
+            }catch (Exception ex){
+                log.error(ex.toString());
+            }
+
+
+            return false;
         }
 
-* */
-    }
 
 
 
