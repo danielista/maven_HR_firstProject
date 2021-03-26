@@ -101,8 +101,9 @@ public class OckovaciaBaza {
                 ps.setString(3, lastName);
                 ps.setInt(4, age);
 
+
                 int update = ps.executeUpdate();
-                log.print("Updated state for: " + name + " "+ lastName + " ("+age+")" + "to: " + state);
+                log.print("Updated state for: " + name + " "+ lastName + " ("+age+")" + " to: " + state);
                 return update == 1;
             }
         } catch (Exception e) { log.error(e.toString()); }

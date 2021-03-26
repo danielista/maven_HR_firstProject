@@ -63,7 +63,7 @@ public class OckovaciController {
         return null;
     }
 
-    @PutMapping("/persons/{state}")
+    @PutMapping("/persons/{state}")  // tu hore v URL si nastavuješ stav.. pozor ;) :D
     public  ResponseEntity<String> changeState(@PathVariable Boolean state, @RequestBody String body) throws ParseException {
 
         JSONObject object = (JSONObject) new JSONParser().parse(body);
