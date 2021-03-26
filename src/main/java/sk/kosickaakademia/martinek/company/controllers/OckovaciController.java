@@ -2,12 +2,10 @@ package sk.kosickaakademia.martinek.company.controllers;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import sk.kosickaakademia.martinek.company.database.Databaza;
 import sk.kosickaakademia.martinek.company.database.OckovaciaBaza;
 import sk.kosickaakademia.martinek.company.entity.User;
@@ -65,6 +63,30 @@ public class OckovaciController {
         return null;
     }
 
+    @PutMapping("/persons/{state}")
+    public  ResponseEntity<String> changeState(@PathVariable Boolean state, @RequestBody String body) throws ParseException {
+
+        JSONObject object = (JSONObject) new JSONParser().parse(body);
+        String firstName = ((String)object.get("fname")).trim();
+        String lastName = ((String)object.get("lname")).trim();
+        //Boolean state = object.get("state").toString().contains("1");
+        int age = Integer.parseInt(String.valueOf(object.get("age")));
+
+        if(firstName==null || lastName==null || firstName.length() == 0 || lastName.length() == 0 || age < 1){
+            log.error("MISSING NAME ;)");
+            JSONObject object1 = new JSONObject();
+            object1.put("ERROR...", "are u sure that u type your name + lastName + age CORRECTLY? :D");
+            return ResponseEntity.status(400).contentType(MediaType.APPLICATION_JSON).body(object1.toJSONString());
+        }
+        if(state==null) state = false;
+
+        boolean result = new OckovaciaBaza().changeState(firstName,lastName,age,state);
+        int status;
+        if(result) status = 200;
+        else status = 404;
+        return ResponseEntity.status(status).contentType(MediaType.APPLICATION_JSON).body("{}");
+
+    }
 
 
 

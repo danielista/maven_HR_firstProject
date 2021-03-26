@@ -60,7 +60,7 @@ public class OckovaciaBaza {
 
 
     //public void insertRecord(String firstname, String lastname, String stav, Date datum){
-        public boolean insertNewPerson(Persons person) {
+    public boolean insertNewPerson(Persons person) {
             String INSERTQUERY = "INSERT INTO osoby (meno, priezvisko, stav, vek) VALUES ( ?,?,?,?)";
 
             try( Connection con = getConnection()){
@@ -86,8 +86,44 @@ public class OckovaciaBaza {
             return false;
         }
 
+        // UPDATE osoby SET stav = true WHERE meno = 'Jozef' AND priezvisko = 'Lipsic' AND Vek = '88'
+    private String updateState = "UPDATE osoby SET stav = ? WHERE meno = ? AND priezvisko = ? AND Vek = ?";
+
+    public boolean changeState(String name, String lastName,int age , Boolean state){
+
+        if (age < 1 || age >= 100) return false;
+
+        try (Connection connection = getConnection()){
+            if (connection != null) {
+                PreparedStatement ps = connection.prepareStatement(updateState);
+                ps.setBoolean(1, state);
+                ps.setString(2, name);
+                ps.setString(3, lastName);
+                ps.setInt(4, age);
+
+                int update = ps.executeUpdate();
+                log.print("Updated state for: " + name + " "+ lastName + " ("+age+")");
+                return update == 1;
+            }
+        } catch (Exception e) { log.error(e.toString()); }
+        return false;
+    }
 
 
-
+    public boolean deletePerson(int id){
+        if (getUserById(id) == null){
+            log.error("No user found");
+            return false;
+        }
+        try (Connection connection = getConnection()) {
+            PreparedStatement ps = connection.prepareStatement(deleteUser);
+            ps.setInt(1, id);
+            if (ps.executeUpdate() == 1){
+                log.print("Deleted user: " + id);
+                return true;
+            }
+        } catch (Exception e) { log.error(e.toString()); }
+        return false;
+    }
 
 }

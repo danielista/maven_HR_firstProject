@@ -21,11 +21,11 @@ public class App
     public static void main( String[] args ) throws SQLException, ClassNotFoundException {
 
 
-       SpringApplication.run(App.class,args);
-
+      SpringApplication.run(App.class,args);
 
        // OckovaciaBaza db = new OckovaciaBaza();
        // db.insertNewPerson(new Persons("Bohdan","Neviemaky",false,30));
+       // db.changeState("Jozef","Lipsic",88,false);
 
        /* OckovaciaBaza db = new OckovaciaBaza();
         List<Persons> zoznam = db.getAllPersons();
