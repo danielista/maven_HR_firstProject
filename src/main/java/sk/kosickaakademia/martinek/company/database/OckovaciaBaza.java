@@ -102,7 +102,7 @@ public class OckovaciaBaza {
                 ps.setInt(4, age);
 
                 int update = ps.executeUpdate();
-                log.print("Updated state for: " + name + " "+ lastName + " ("+age+")");
+                log.print("Updated state for: " + name + " "+ lastName + " ("+age+")" + "to: " + state);
                 return update == 1;
             }
         } catch (Exception e) { log.error(e.toString()); }
@@ -110,16 +110,51 @@ public class OckovaciaBaza {
     }
 
 
-    public boolean deletePerson(int id){
-        if (getUserById(id) == null){
-            log.error("No user found");
+    public Persons getPersonByName(String name, String lastName, int age){
+        if (name == null || lastName == null || age < 5) {
+            log.error("INCORET name or lastname or age");
+            return null;
+        }
+
+        String sql2 = "SELECT * FROM osoby WHERE meno = ? AND priezvisko = ? AND Vek = ? ";
+
+        try (Connection connection = getConnection()){
+            if (connection != null) {
+                PreparedStatement ps = connection.prepareStatement(sql2);
+                ps.setString(1, name);
+                ps.setString(2, lastName);
+                ps.setInt(3, age);
+
+                List<Persons> list =  executeSelect(ps);
+                if (list.isEmpty())
+                    return null;
+                else {
+                    return list.get(0);
+                }
+
+            }
+        } catch (Exception e) { log.error(e.toString()); }
+        return null;
+    }
+
+
+    private String deletePerson = "DELETE FROM osoby WHERE meno = ? AND priezvisko = ? AND Vek = ? ";
+    public boolean deletePerson(String name, String lastName, int age ){
+
+
+        if (getPersonByName(name,lastName,age) == null){
+            log.error("No Persons found");
             return false;
         }
+
         try (Connection connection = getConnection()) {
-            PreparedStatement ps = connection.prepareStatement(deleteUser);
-            ps.setInt(1, id);
+            PreparedStatement ps = connection.prepareStatement(deletePerson);
+            ps.setString(1, name);
+            ps.setString(2, lastName);
+            ps.setInt(3, age);
+
             if (ps.executeUpdate() == 1){
-                log.print("Deleted user: " + id);
+                log.print("Deleted person: " + name + " " + lastName + " (" +age+ ")");
                 return true;
             }
         } catch (Exception e) { log.error(e.toString()); }

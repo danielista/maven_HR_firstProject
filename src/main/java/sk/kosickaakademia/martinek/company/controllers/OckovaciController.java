@@ -89,6 +89,30 @@ public class OckovaciController {
     }
 
 
+    @RequestMapping(value = "/Persons/delete", method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteUser(@RequestBody String body){
+
+        JSONObject object = null;
+        try {
+            object = (JSONObject) new JSONParser().parse(body);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        String firstName = ((String)object.get("fname")).trim();
+        String lastName = ((String)object.get("lname")).trim();
+        int age = Integer.parseInt(String.valueOf(object.get("age")));
+
+        OckovaciaBaza dat = new OckovaciaBaza();
+        if (dat.getPersonByName(firstName,lastName,age) == null){
+            JSONObject error = new JSONObject();
+            error.put("error", "person not found");
+            log.error("person not found");
+            return ResponseEntity.status(404).contentType(MediaType.APPLICATION_JSON).body(error.toJSONString());
+        }
+        dat.deletePerson(firstName,lastName,age);
+        return ResponseEntity.status(204).contentType(MediaType.APPLICATION_JSON).body(null);
+    }
+
 
 
 

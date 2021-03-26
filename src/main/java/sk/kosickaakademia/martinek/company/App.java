@@ -23,9 +23,10 @@ public class App
 
       SpringApplication.run(App.class,args);
 
-       // OckovaciaBaza db = new OckovaciaBaza();
+      // OckovaciaBaza db = new OckovaciaBaza();
        // db.insertNewPerson(new Persons("Bohdan","Neviemaky",false,30));
        // db.changeState("Jozef","Lipsic",88,false);
+       // db.deletePerson("Jozef","Lipsic", 88);
 
        /* OckovaciaBaza db = new OckovaciaBaza();
         List<Persons> zoznam = db.getAllPersons();
