@@ -88,7 +88,6 @@ public class OckovaciController {
 
     }
 
-
     @RequestMapping(value = "/Persons/delete", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteUser(@RequestBody String body){
 

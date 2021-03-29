@@ -9,6 +9,7 @@ import sk.kosickaakademia.martinek.company.database.OckovaciaBaza;
 import sk.kosickaakademia.martinek.company.entity.User;
 import sk.kosickaakademia.martinek.company.entity.ockovanie.Persons;
 import sk.kosickaakademia.martinek.company.enumartoris.Gender;
+import sk.kosickaakademia.martinek.company.mongodatabaza.MongoDatabasa;
 
 import javax.swing.*;
 import java.sql.SQLException;
@@ -21,8 +22,10 @@ public class App
     public static void main( String[] args ) throws SQLException, ClassNotFoundException {
 
 
-      SpringApplication.run(App.class,args);
+      //SpringApplication.run(App.class,args);
 
+        MongoDatabasa db = new MongoDatabasa();
+        db.getConnectionToMongo();
       // OckovaciaBaza db = new OckovaciaBaza();
        // db.insertNewPerson(new Persons("Bohdan","Neviemaky",false,30));
        // db.changeState("Jozef","Lipsic",88,false);
