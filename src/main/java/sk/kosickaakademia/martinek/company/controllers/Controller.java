@@ -20,7 +20,6 @@ public class Controller {
     Log log = new Log();
 
 
-
     @PostMapping("/user/new")
     public ResponseEntity<String> insertNewUser(@RequestBody String data){
         try {
@@ -103,3 +102,4 @@ public class Controller {
 
 
 }
+

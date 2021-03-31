@@ -26,6 +26,10 @@ public class App
 
         MongoDatabasa db = new MongoDatabasa();
         db.getConnectionToMongo();
+        JSONObject obj = new JSONObject();
+        obj.put("meno","Daniel");
+        obj.put("priezvisko","Riciardo");
+        db.insertUser(obj);
       // OckovaciaBaza db = new OckovaciaBaza();
        // db.insertNewPerson(new Persons("Bohdan","Neviemaky",false,30));
        // db.changeState("Jozef","Lipsic",88,false);
